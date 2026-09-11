@@ -1,0 +1,8 @@
+flowchart LR
+    A["Cycle telemetry + protocol metadata"] --> B["Health indicators"]
+    B --> C["Degradation trajectory"]
+    C --> D["RUL estimate + interval"]
+    D --> E["Cycle error / calibration"]
+    E --> F["Battery RUL Lab
+Evaluation"]
+    F -. feedback .-> C

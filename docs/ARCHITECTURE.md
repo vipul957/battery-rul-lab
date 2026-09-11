@@ -1,21 +1,29 @@
 # Battery RUL Lab architecture
 
-## Purpose
+## System map
 
-Estimate battery health and remaining useful life with interpretable uncertainty.
+```mermaid
+flowchart LR
+    A["Cycle telemetry + protocol metadata"] --> B["Health indicators"]
+    B --> C["Degradation trajectory"]
+    C --> D["RUL estimate + interval"]
+    D --> E["Cycle error / calibration"]
+    E --> F["Battery RUL Lab
+Evaluation"]
+    F -. feedback .-> C
+```
 
-## Current flow
 
-`cycle telemetry → health indicators → degradation model → RUL interval`
+## Stage responsibilities
 
-## Design rule
+| Stage | Responsibility | Review question |
+|---|---|---|
+| Input | Define the domain payload and units | Is provenance and timestamp semantics explicit? |
+| Validation | Reject malformed or leaked information | Can the contract fail loudly? |
+| Method | Transform inputs into a prediction or decision | Is the baseline inspectable? |
+| Output | Return a typed result with uncertainty where relevant | Can a downstream user understand the result? |
+| Evaluation | Measure quality and failure modes | Are splits, metrics, and limitations documented? |
 
-Keep domain assumptions at the boundary, keep core utilities deterministic, and keep evaluation separate from training or inference code. Every future model should be compared with the current baseline under the same split and metric definitions.
+## Design principle
 
-## Review checklist
-
-- Input units, timestamps, and provenance are documented.
-- Training and evaluation information are separated.
-- Edge cases have tests.
-- Uncertainty or failure behavior is explicit.
-- The README states intended use and non-goals.
+Keep domain assumptions at the boundary, keep the core deterministic where possible, and make the failure path as visible as the success path.

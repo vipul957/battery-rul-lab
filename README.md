@@ -31,6 +31,24 @@ flowchart LR
 The repository currently contains a dependency-light, deterministic baseline with tests. It is intentionally small enough to inspect line by line. The next research layer should preserve the same input contract and evaluation protocol rather than replacing the baseline with an opaque demo.
 
 
+## Visual architecture
+
+The project follows a transparent pipeline. Each stage has a testable responsibility, and the evaluation stage feeds failure information back into the next experiment.
+
+```mermaid
+flowchart LR
+    A["Cycle telemetry + protocol metadata"] --> B["Health indicators"]
+    B --> C["Degradation trajectory"]
+    C --> D["RUL estimate + interval"]
+    D --> E["Cycle error / calibration"]
+    E --> F["Battery RUL Lab
+Evaluation"]
+    F -. feedback .-> C
+```
+
+
+For implementation details, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
 ## Problem statement
 
 Estimate degradation state and remaining cycles while communicating uncertainty.
