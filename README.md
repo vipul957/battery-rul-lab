@@ -4,6 +4,33 @@
 
 > **Battery RUL Lab** is a battery health estimation and remaining-useful-life research toolkit.
 
+## Start here
+
+**In one sentence:** Estimate battery health and remaining useful life with interpretable uncertainty.
+
+| If you want to... | Open this first |
+|---|---|
+| Understand the method | [`src/battery_rul_lab/health.py`](src/battery_rul_lab/health.py) |
+| See the second reusable utility | [`src/battery_rul_lab/uncertainty.py`](src/battery_rul_lab/uncertainty.py) |
+| Run a tiny example | [`examples/quick_demo.py`](examples/quick_demo.py) |
+| Understand the next milestone | [`docs/ROADMAP.md`](docs/ROADMAP.md) |
+| Check correctness | [`tests/`](tests/) and the CI badge above |
+
+### System flow
+
+```mermaid
+flowchart LR
+    A[Domain input] --> B[Validated contract]
+    B --> C[health indicators]
+    C --> D[Measured output]
+    D --> E[Limitations and next experiment]
+```
+
+### What is implemented now
+
+The repository currently contains a dependency-light, deterministic baseline with tests. It is intentionally small enough to inspect line by line. The next research layer should preserve the same input contract and evaluation protocol rather than replacing the baseline with an opaque demo.
+
+
 ## Problem statement
 
 Estimate degradation state and remaining cycles while communicating uncertainty.
